@@ -5,6 +5,13 @@
 
 import { DiffHunk } from './diffHunk';
 
+export interface Reaction {
+	alias: string;
+	fallback_url: string;
+	count: number;
+	description: string;
+}
+
 export interface User {
 	id: string;
 	login: string;
@@ -31,4 +38,5 @@ export interface Comment {
 	absolutePosition?: number;
 	canEdit: boolean;
 	canDelete: boolean;
+	reactions: Reaction[];
 }

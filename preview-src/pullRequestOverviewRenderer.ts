@@ -69,6 +69,7 @@ interface Comment {
 	absolutePosition?: number;
 	canEdit: boolean;
 	canDelete: boolean;
+	reactions: Reaction[];
 }
 
 export enum EventType {
@@ -111,6 +112,13 @@ export interface Verification {
 	reason: string;
 	signature?: any;
 	payload?: any;
+}
+
+export interface Reaction {
+	alias: string;
+	fallback_url: string;
+	count: number;
+	description: string;
 }
 
 export interface User {
@@ -417,6 +425,7 @@ export class ActionsBar {
 class CommentNode {
 	private _commentContainer: HTMLDivElement = document.createElement('div');
 	private _commentBody: HTMLDivElement = document.createElement('div');
+	private _commentReactions: HTMLDivElement = document.createElement('div');
 	private _actionsBar: ActionsBar | undefined;
 
 	constructor(private _comment: Comment | CommentEvent,
@@ -431,6 +440,8 @@ class CommentNode {
 		}
 
 		const userIcon = renderUserIcon(this._comment.user.html_url, this._comment.user.avatar_url);
+		// const reactIcons = this._comment.
+
 		const reviewCommentContainer: HTMLDivElement = document.createElement('div');
 		reviewCommentContainer.className = 'review-comment-container';
 		this._commentContainer.appendChild(userIcon);
@@ -454,6 +465,9 @@ class CommentNode {
 		this._commentBody.className = 'comment-body';
 
 		this._commentBody.innerHTML  = md.render(emoji.emojify(this._comment.body));
+
+		this._commentReactions.className = 'comment-reactions';
+		// this._commentBody.innerHTML();
 
 		commentHeader.appendChild(authorLink);
 		commentHeader.appendChild(commentState);

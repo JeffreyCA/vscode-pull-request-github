@@ -270,6 +270,13 @@ export class PullRequestManager implements IPullRequestManager {
 			number: pullRequest.prNumber,
 			per_page: 100
 		});
+
+		const reacts = await octokit.reactions.getForIssue({
+			owner: remote.owner,
+			repo: remote.repositoryName,
+			number: pullRequest.prNumber,
+			per_page: 100
+		});
 		const rawComments = reviewData.data.map(comment => this.addCommentPermissions(comment, remote));
 		return parserCommentDiffHunk(rawComments);
 	}
